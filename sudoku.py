@@ -61,7 +61,9 @@ def draw_game(screen):
     board.fill("white")
     screen.blit(board, (397,0))
     button_font = pygame.font.Font("LEMONMILK-Medium.otf", 50)
+    number_font = pygame.font.Font("LEMONMILK-Light.otf", 50)
 
+    #reset, restart, exit buttons
     reset_text = button_font.render("reset", 1, (255, 255, 255))
     restart_text = button_font.render("restart", 1, (255, 255, 255))
     exit_text = button_font.render("exit", 1, (255, 255, 255))
@@ -86,11 +88,19 @@ def draw_game(screen):
         center=(397 // 2, 603 // 2 + 175))
     screen.blit(exit_surface, exit_rectangle)
 
+    #board lines
     for row in range(0, 10, 1):
         pygame.draw.line(screen, (0, 0, 0), (397, row * 67), (1000, row * 67))
     for col in range(0, 10, 1):
         pygame.draw.line(screen, (0, 0, 0), (col *67 + 397, 0), (col * 67+397, 603))
 
+    #sample number
+    number_surface = number_font.render("3", 1, "black")
+    number_rectangle = number_surface.get_rect(
+        center=(431, 33))
+    screen.blit(number_surface, number_rectangle)
+
+    #running
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -110,6 +120,7 @@ if __name__ == '__main__':
     screen = pygame.display.set_mode((1000,603))
     bg = pygame.image.load("TL.png")
     # bg and dimensions subject to change, just using it for reference right now
+
     while True:
         diff = draw_game_start(screen)
         if diff == 1:
