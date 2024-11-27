@@ -46,7 +46,9 @@ def draw_game_start(screen):
                 if easy_rectangle.collidepoint(event.pos):
                     return
                 elif medium_rectangle.collidepoint(event.pos):
-                    sys.exit()
+                    return
+                elif hard_rectangle.collidepoint(event.pos):
+                    return
         pygame.display.update()
 
 if __name__ == '__main__':
@@ -54,4 +56,5 @@ if __name__ == '__main__':
     pygame.init()
     screen = pygame.display.set_mode((1000,603))
     bg = pygame.image.load("TL.png")
+    # bg and dimensions subject to change, just using it for reference right now
     draw_game_start(screen)
