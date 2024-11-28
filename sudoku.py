@@ -4,7 +4,8 @@ def draw_game_start(screen):
     start_title_font = pygame.font.Font("LEMONMILK-Medium.otf", 70)
     button_font = pygame.font.Font("LEMONMILK-Medium.otf", 50)
 
-    screen.blit(bg, (0, 0))
+    # screen.blit(bg, (0, 0))
+    screen.fill("black")
 
     title_surface = start_title_font.render("Sudoku", 1, "white")
     title_rectangle = title_surface.get_rect(
@@ -56,7 +57,8 @@ def draw_game_start(screen):
         pygame.display.update()
 
 def draw_game(screen):
-    screen.blit(bg, (0, 0))
+    #screen.blit(bg, (0, 0))
+    screen.fill("black")
     board = pygame.Surface((603, 603))
     board.fill("white")
     screen.blit(board, (397,0))
@@ -82,7 +84,7 @@ def draw_game(screen):
         center=(397 // 2 , 603 // 2 - 175))
     screen.blit(reset_surface, reset_rectangle)
     restart_rectangle = restart_surface.get_rect(
-        center=(397 // 2, 603 // 2 +10))
+        center=(397 // 2, 603 // 2 ))
     screen.blit(restart_surface, restart_rectangle)
     exit_rectangle = exit_surface.get_rect(
         center=(397 // 2, 603 // 2 + 175))
@@ -93,6 +95,10 @@ def draw_game(screen):
         pygame.draw.line(screen, (0, 0, 0), (397, row * 67), (1000, row * 67))
     for col in range(0, 10, 1):
         pygame.draw.line(screen, (0, 0, 0), (col *67 + 397, 0), (col * 67+397, 603))
+    for row in range(0, 10, 3):
+        pygame.draw.line(screen, (0, 0, 0), (397, row * 67), (1000, row * 67),5)
+    for col in range(0, 10, 3):
+        pygame.draw.line(screen, (0, 0, 0), (col * 67 + 397, 0), (col * 67 + 397, 603),5)
 
     #sample number
     number_surface = number_font.render("3", 1, "black")
@@ -114,6 +120,61 @@ def draw_game(screen):
                     return 3
         pygame.display.update()
 
+def draw_game_over(screen):
+    screen.fill("black")
+    start_title_font = pygame.font.Font("LEMONMILK-Medium.otf", 70)
+    button_font = pygame.font.Font("LEMONMILK-Medium.otf", 50)
+
+    title_surface = start_title_font.render("Game Lost :((((", 1, "white")
+    title_rectangle = title_surface.get_rect(
+        center=(1000 // 2, 603 // 2 - 150))
+    screen.blit(title_surface, title_rectangle)
+
+    exit_text = button_font.render("exit", 1, (255, 255, 255))
+    exit_surface = pygame.Surface((exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20))
+    exit_surface.fill((30, 46, 87))
+    exit_surface.blit(exit_text, (10, 10))
+    exit_rectangle = exit_surface.get_rect(
+        center=(1000 // 2, 603 // 2 + 175))
+    screen.blit(exit_surface, exit_rectangle)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if exit_rectangle.collidepoint(event.pos):
+                    sys.exit()
+        pygame.display.update()
+
+def draw_game_won(screen):
+    screen.fill("black")
+    start_title_font = pygame.font.Font("LEMONMILK-Medium.otf", 70)
+    button_font = pygame.font.Font("LEMONMILK-Medium.otf", 50)
+
+    title_surface = start_title_font.render("Game Won!!!", 1, "white")
+    title_rectangle = title_surface.get_rect(
+        center=(1000 // 2, 603 // 2 - 150))
+    screen.blit(title_surface, title_rectangle)
+
+    restart_text = button_font.render("restart", 1, (255, 255, 255))
+    restart_surface = pygame.Surface((restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20))
+    restart_surface.fill((30, 46, 87))
+    restart_surface.blit(restart_text, (10, 10))
+    restart_rectangle = restart_surface.get_rect(
+        center=(1000 // 2, 603 // 2 + 175))
+    screen.blit(restart_surface, restart_rectangle)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if restart_rectangle.collidepoint(event.pos):
+                    return 2
+        pygame.display.update()
+
+
 if __name__ == '__main__':
 
     pygame.init()
@@ -131,10 +192,9 @@ if __name__ == '__main__':
             boardOption = draw_game(screen)
 
         if boardOption == 1:
-            boardOption = draw_game(screen)
-            continue
+            draw_game_won(screen)
         elif boardOption == 2:
-            continue
+            draw_game_over(screen)
         elif boardOption == 3:
             sys.exit()
 
