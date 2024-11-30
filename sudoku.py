@@ -57,12 +57,10 @@ def draw_game_start(screen):
                     return 50
         pygame.display.update()
 
-def draw_game(screen):
+def game(screen):
     screen.blit(bg, (0, 0))
     #screen.fill("black")
-    board = pygame.Surface((603, 603))
-    board.fill("white")
-    screen.blit(board, (397,0))
+
     button_font = pygame.font.Font("LEMONMILK-Medium.otf", 50)
     number_font = pygame.font.Font("LEMONMILK-Light.otf", 50)
 
@@ -104,12 +102,15 @@ def draw_game(screen):
         '''
 
     #sample number
+    '''
     number_surface = number_font.render("3", 1, "black")
     number_rectangle = number_surface.get_rect(
         center=(431, 33))
     screen.blit(number_surface, number_rectangle)
-
     '''
+
+    board.draw(sudoku)
+
     #running
     while True:
         for event in pygame.event.get():
@@ -123,7 +124,7 @@ def draw_game(screen):
                 elif exit_rectangle.collidepoint(event.pos):
                     return 3
         pygame.display.update()
-    '''
+
 
 def draw_game_over(screen):
     #screen.fill("black")
@@ -144,7 +145,7 @@ def draw_game_over(screen):
         center=(1000 // 2, 603 // 2 + 175))
     screen.blit(exit_surface, exit_rectangle)
 
-    '''
+
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -153,7 +154,7 @@ def draw_game_over(screen):
                 if exit_rectangle.collidepoint(event.pos):
                     sys.exit()
         pygame.display.update()
-    '''
+
 
 def draw_game_won(screen):
     #screen.fill("black")
@@ -190,7 +191,6 @@ if __name__ == '__main__':
     bg = pygame.image.load("TL.png")
     # bg and dimensions subject to change, just using it for reference right now
 
-
     while True:
 
         diff = draw_game_start(screen)
@@ -200,10 +200,13 @@ if __name__ == '__main__':
             for y in range(9):
                 print(sudoku[x][y], end=" ")
             print("")
+        print("")
 
-        screen.blit(bg, (0, 0))
-        draw_game(screen)
-        board.draw()
+
+        #draw_game(screen)
+        #board.draw()
+        boardOption = game(screen)
+        '''
         while True:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
@@ -217,6 +220,7 @@ if __name__ == '__main__':
                         sys.exit()
             pygame.display.update()
         '''
+        '''
         diff = draw_game_start(screen)
         if diff == 1:
             boardOption = draw_game(screen)
@@ -224,7 +228,7 @@ if __name__ == '__main__':
             boardOption = draw_game(screen)
         if diff == 3:
             boardOption = draw_game(screen)
-        
+        '''
     
         if boardOption == 1:
             #just testing game won and game lost screens
@@ -233,6 +237,6 @@ if __name__ == '__main__':
             draw_game_over(screen)
         elif boardOption == 3:
             sys.exit()
-        '''
+
 
 
