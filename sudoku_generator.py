@@ -261,19 +261,24 @@ def generate_sudoku(size, removed):
 
 class Cell:
     def __init__(self, value, row, col, screen):
-        self.value = value
+        self.value = str(value)
         self.row = row
         self.col = col
         self.screen = screen
 
     def set_cell_value(self, value):
-        pass
+        self.value = value
 
     def set_sketched_value(self, value):
-        pass
+        self.sketched_value = value
 
     def draw(self):
-        pass
+        number_font = pygame.font.Font("LEMONMILK-Light.otf", 50)
+
+        number_surface = number_font.render(self.value, 1, "black")
+        number_rectangle = number_surface.get_rect(
+            center=(431 + self.col*67, 33 + self.row*67))
+        self.screen.blit(number_surface, number_rectangle)
 
 class Board:
     def __init__(self, width, height, screen, difficulty):
@@ -282,7 +287,7 @@ class Board:
         self.screen = screen
         self.difficulty = difficulty
 
-    def draw(self):
+    def draw(self,sudoku):
         #self.screen.blit(bg, (0, 0))
         #self.screen.fill("black")
         board = pygame.Surface((603, 603))
@@ -292,11 +297,18 @@ class Board:
             pygame.draw.line(self.screen, (0, 0, 0), (397, row * 67), (1000, row * 67))
         for col in range(0, 10, 1):
             pygame.draw.line(self.screen, (0, 0, 0), (col * 67 + 397, 0), (col * 67 + 397, 603))
-        for row in range(0, 10, 3):
+        for row in range(3, 7, 3):
             pygame.draw.line(self.screen, (0, 0, 0), (397, row * 67), (1000, row * 67), 5)
-        for col in range(0, 10, 3):
+        for col in range(3, 7, 3):
             pygame.draw.line(self.screen, (0, 0, 0), (col * 67 + 397, 0), (col * 67 + 397, 603), 5)
 
+        for y in range(9):
+            for x in range(9):
+                if sudoku[x][y] == 0:
+                    continue
+                else:
+                    test = Cell(sudoku[x][y],x,y,self.screen)
+                    test.draw()
 
     def select(self, row, col):
         pass
