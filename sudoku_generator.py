@@ -97,8 +97,8 @@ class SudokuGenerator:
 	Return: boolean
     '''
     def valid_in_box(self, row_start, col_start, num):
-        for x in range(row_start):
-            for y in range(col_start):
+        for x in range(row_start,row_start+2):
+            for y in range(col_start,col_start+2):
                 if self.board[x][y] == num:
                     return False
         return True
