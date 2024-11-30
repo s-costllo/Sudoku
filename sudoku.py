@@ -50,11 +50,11 @@ def draw_game_start(screen):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if easy_rectangle.collidepoint(event.pos):
-                    return 1
+                    return 30
                 elif medium_rectangle.collidepoint(event.pos):
-                    return 2
+                    return 40
                 elif hard_rectangle.collidepoint(event.pos):
-                    return 3
+                    return 50
         pygame.display.update()
 
 def draw_game(screen):
@@ -192,15 +192,14 @@ if __name__ == '__main__':
 
 
     while True:
-        sudoku = SudokuGenerator(9, 30)
-        sudoku.fill_diagonal()
-        sudoku.fill_values()
-        x = sudoku.fill_remaining(0,3)
-        print(x)
-        sudoku.print_board()
 
         diff = draw_game_start(screen)
         board = Board(9, 9, screen, diff)
+        sudoku = generate_sudoku(9, diff)
+        for x in range(9):
+            for y in range(9):
+                print(sudoku[x][y], end=" ")
+            print("")
 
         screen.blit(bg, (0, 0))
         draw_game(screen)
