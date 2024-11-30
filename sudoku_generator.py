@@ -294,13 +294,13 @@ class Board:
         board.fill("white")
         self.screen.blit(board, (397, 0))
         for row in range(0, 10, 1):
-            pygame.draw.line(self.screen, (0, 0, 0), (397, row * 67), (1000, row * 67))
+            pygame.draw.line(self.screen, (99, 101, 105), (397, row * 67), (1000, row * 67))
         for col in range(0, 10, 1):
-            pygame.draw.line(self.screen, (0, 0, 0), (col * 67 + 397, 0), (col * 67 + 397, 603))
+            pygame.draw.line(self.screen, (99, 101, 105), (col * 67 + 397, 0), (col * 67 + 397, 603))
         for row in range(3, 7, 3):
-            pygame.draw.line(self.screen, (0, 0, 0), (397, row * 67), (1000, row * 67), 4)
+            pygame.draw.line(self.screen, (99, 101, 105), (397, row * 67), (1000, row * 67), 4)
         for col in range(3, 7, 3):
-            pygame.draw.line(self.screen, (0, 0, 0), (col * 67 + 397, 0), (col * 67 + 397, 603), 4)
+            pygame.draw.line(self.screen, (99, 101, 105), (col * 67 + 397, 0), (col * 67 + 397, 603), 4)
 
         for y in range(9):
             for x in range(9):
@@ -311,10 +311,10 @@ class Board:
                     board.draw()
 
     def select(self, row, col):
-        pygame.draw.line(self.screen, "yellow", (398+row*67,col*67), (398+row*67+67,col*67),3)
-        pygame.draw.line(self.screen, "yellow", (398 + row * 67, 1+col * 67), (398 + row * 67, col * 67-67), 3)
-        pygame.draw.line(self.screen, "yellow", (398 + row * 67, 1+col * 67-67), (398 + row * 67 + 67, 1+col * 67-67), 3)
-        pygame.draw.line(self.screen, "yellow", (397 + row * 67+67, 1+col * 67), (397 + row * 67 + 67, col * 67-67), 3)
+        pygame.draw.line(self.screen, (30,46,87), (398+row*67,col*67), (398+row*67+67,col*67),4)
+        pygame.draw.line(self.screen, (30,46,87), (398 + row * 67, 1+col * 67), (398 + row * 67, col * 67-67), 4)
+        pygame.draw.line(self.screen, (30,46,87), (398 + row * 67, 1+col * 67-67), (398 + row * 67 + 67, 1+col * 67-67), 4)
+        pygame.draw.line(self.screen, (30,46,87), (397 + row * 67+67, 1+col * 67), (397 + row * 67 + 67, col * 67-67), 4)
 
     def click(self, row, col):
         row = (row - 397)//67
