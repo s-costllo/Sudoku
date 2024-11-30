@@ -26,7 +26,7 @@ class SudokuGenerator:
     '''
     def __init__(self, row_length, removed_cells):
         self.row_length = row_length
-        self.remove_cells = removed_cells
+        self.removed_cells = removed_cells
         self.board = [[0]*9 for i in range(9)]
         self.box_length = int(math.sqrt(row_length))
 
@@ -223,7 +223,17 @@ class SudokuGenerator:
 	Return: None
     '''
     def remove_cells(self):
-        pass
+        x = 0
+        while True:
+            r = random.randint(0, 8)
+            c = random.randint(0, 8)
+            if self.board[r][c] == 0:
+                continue
+            else:
+                self.board[r][c] = 0
+                x += 1
+            if x == self.removed_cells:
+                break
 
 '''
 DO NOT CHANGE
