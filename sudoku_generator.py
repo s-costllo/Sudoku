@@ -298,23 +298,29 @@ class Board:
         for col in range(0, 10, 1):
             pygame.draw.line(self.screen, (0, 0, 0), (col * 67 + 397, 0), (col * 67 + 397, 603))
         for row in range(3, 7, 3):
-            pygame.draw.line(self.screen, (0, 0, 0), (397, row * 67), (1000, row * 67), 5)
+            pygame.draw.line(self.screen, (0, 0, 0), (397, row * 67), (1000, row * 67), 4)
         for col in range(3, 7, 3):
-            pygame.draw.line(self.screen, (0, 0, 0), (col * 67 + 397, 0), (col * 67 + 397, 603), 5)
+            pygame.draw.line(self.screen, (0, 0, 0), (col * 67 + 397, 0), (col * 67 + 397, 603), 4)
 
         for y in range(9):
             for x in range(9):
                 if sudoku[x][y] == 0:
                     continue
                 else:
-                    test = Cell(sudoku[x][y],x,y,self.screen)
-                    test.draw()
+                    board = Cell(sudoku[x][y],x,y,self.screen)
+                    board.draw()
 
     def select(self, row, col):
-        pass
+        pygame.draw.line(self.screen, "yellow", (398+row*67,col*67), (398+row*67+67,col*67),3)
+        pygame.draw.line(self.screen, "yellow", (398 + row * 67, 1+col * 67), (398 + row * 67, col * 67-67), 3)
+        pygame.draw.line(self.screen, "yellow", (398 + row * 67, 1+col * 67-67), (398 + row * 67 + 67, 1+col * 67-67), 3)
+        pygame.draw.line(self.screen, "yellow", (397 + row * 67+67, 1+col * 67), (397 + row * 67 + 67, col * 67-67), 3)
 
     def click(self, row, col):
-        pass
+        row = (row - 397)//67
+        col = col//67
+        coor = (row, col)
+        return coor
 
     def clear(self):
         pass
