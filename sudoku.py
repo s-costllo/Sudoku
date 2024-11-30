@@ -1,5 +1,6 @@
 import pygame, sys
 from sudoku_generator import *
+import copy
 
 def draw_game_start(screen):
     start_title_font = pygame.font.Font("LEMONMILK-Medium.otf", 70)
@@ -42,7 +43,6 @@ def draw_game_start(screen):
     screen.blit(easy_surface, easy_rectangle)
     screen.blit(medium_surface, medium_rectangle)
     screen.blit(hard_surface, hard_rectangle)
-
 
     while True:
         for event in pygame.event.get():
@@ -89,26 +89,6 @@ def game(screen):
         center=(397 // 2, 603 // 2 + 175))
     screen.blit(exit_surface, exit_rectangle)
 
-    #board lines
-    '''
-    for row in range(0, 10, 1):
-        pygame.draw.line(screen, (0, 0, 0), (397, row * 67), (1000, row * 67))
-    for col in range(0, 10, 1):
-        pygame.draw.line(screen, (0, 0, 0), (col * 67 + 397, 0), (col * 67 + 397, 603))
-    for row in range(0, 10, 3):
-        pygame.draw.line(screen, (0, 0, 0), (397, row * 67), (1000, row * 67), 5)
-    for col in range(0, 10, 3):
-        pygame.draw.line(screen, (0, 0, 0), (col * 67 + 397, 0), (col * 67 + 397, 603), 5)
-        '''
-
-    #sample number
-    '''
-    number_surface = number_font.render("3", 1, "black")
-    number_rectangle = number_surface.get_rect(
-        center=(431, 33))
-    screen.blit(number_surface, number_rectangle)
-    '''
-
     board.draw(sudoku)
 
     #running
@@ -123,6 +103,14 @@ def game(screen):
                     return 2
                 elif exit_rectangle.collidepoint(event.pos):
                     return 3
+                else:
+                    x = event.pos[0]
+                    y = event.pos[1]
+                    #print(x,y)
+                    coor = board.click(x, y)
+                    print(coor)
+                    board.draw(sudoku)
+                    board.select(coor[0],coor[1]+1)
         pygame.display.update()
 
 
@@ -195,17 +183,39 @@ if __name__ == '__main__':
 
         diff = draw_game_start(screen)
         board = Board(9, 9, screen, diff)
-        sudoku = generate_sudoku(9, diff)
+        #sudoku = generate_sudoku(9, diff)
+        sudoku = SudokuGenerator(9, diff)
+        sudoku.fill_values()
+        sudokuR = copy.deepcopy(sudoku)
+        sudokuSol = sudoku.get_board()
+        sudokuR.remove_cells()
+        sudoku = sudokuR.get_board()
+        sudokuO = copy.deepcopy(sudoku)
+
+        '''
+        for x in range(9):
+            for y in range(9):
+                print(sudokuSol[x][y], end=" ")
+            print("")
+        print("")
+        '''
+
         for x in range(9):
             for y in range(9):
                 print(sudoku[x][y], end=" ")
             print("")
         print("")
 
-
-        #draw_game(screen)
-        #board.draw()
         boardOption = game(screen)
+
+        if boardOption == 1:
+            #just testing game won and game lost screens
+            draw_game_won(screen)
+        elif boardOption == 2:
+            draw_game_over(screen)
+        elif boardOption == 3:
+            sys.exit()
+
         '''
         while True:
             for event in pygame.event.get():
@@ -230,13 +240,7 @@ if __name__ == '__main__':
             boardOption = draw_game(screen)
         '''
     
-        if boardOption == 1:
-            #just testing game won and game lost screens
-            draw_game_won(screen)
-        elif boardOption == 2:
-            draw_game_over(screen)
-        elif boardOption == 3:
-            sys.exit()
+
 
 
 
