@@ -93,6 +93,8 @@ def game(screen):
 
     #running
     while True:
+        x = -1
+        y = -1
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 sys.exit()
@@ -109,8 +111,31 @@ def game(screen):
                     #print(x,y)
                     coor = board.click(x, y)
                     print(coor)
-                    board.draw(sudoku)
-                    board.select(coor[0],coor[1]+1)
+                    if coor[0] >= 0:
+                        board.draw(sudoku)
+                        board.select(coor[0],coor[1])
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_UP:
+                    if coor[0]>=0 and coor[1]>0:
+                        board.draw(sudoku)
+                        coor = (coor[0], coor[1]-1)
+                        board.select(coor[0], coor[1])
+                if event.key == pygame.K_DOWN:
+                    if coor[0] >= 0 and coor[1] < 8:
+                        board.draw(sudoku)
+                        coor = (coor[0], coor[1] + 1)
+                        board.select(coor[0], coor[1])
+                if event.key == pygame.K_LEFT:
+                    if coor[0] >= 1:
+                        board.draw(sudoku)
+                        coor = (coor[0] - 1, coor[1])
+                        board.select(coor[0], coor[1])
+                if event.key == pygame.K_RIGHT:
+                    if coor[0] >= 0 and coor[1] <= 8:
+                        board.draw(sudoku)
+                        coor = (coor[0] + 1, coor[1])
+                        board.select(coor[0] , coor[1])
+
         pygame.display.update()
 
 
