@@ -311,10 +311,14 @@ class Board:
                     board.draw()
 
     def select(self, row, col):
+        #top
         pygame.draw.line(self.screen, (30,46,87), (398+row*67,col*67), (398+row*67+67,col*67),4)
-        pygame.draw.line(self.screen, (30,46,87), (398 + row * 67, 1+col * 67), (398 + row * 67, col * 67-67), 4)
-        pygame.draw.line(self.screen, (30,46,87), (398 + row * 67, 1+col * 67-67), (398 + row * 67 + 67, 1+col * 67-67), 4)
-        pygame.draw.line(self.screen, (30,46,87), (397 + row * 67+67, 1+col * 67), (397 + row * 67 + 67, col * 67-67), 4)
+        #left
+        pygame.draw.line(self.screen, (30,46,87), (398 + row * 67,  col * 67), (398 + row * 67, col * 67+67), 4)
+        #bottom
+        pygame.draw.line(self.screen, (30,46,87), (398 + row * 67,  col * 67+67), (398 + row * 67 + 67, col * 67+67), 4)
+        #right
+        pygame.draw.line(self.screen, (30,46,87), (397 + row * 67+67,  col * 67), (397 + row * 67+67, col * 67+67), 4)
 
     def click(self, row, col):
         row = (row - 397)//67
