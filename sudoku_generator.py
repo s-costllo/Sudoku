@@ -384,7 +384,11 @@ class Board:
         pass
 
     def place_number(self, value):
-        pass
+        row, col = self.selected_cell
+	if 0 <= row < len(self.board) and 0 <= col < len(self.board[row]):
+	    self.board[row][col] = value
+        else:
+            raise IndexError("Selected cell is out of bounds.")
 
     def set_board(self, board):
 	self.board = board
