@@ -395,7 +395,10 @@ class Board:
         return True
 
     def update_board(self):
-        pass
+        for row in range(len(self.board)):
+            for col in range(len(self.board[row])):
+		if self.board[row][col] is None:
+                self.board[row][col] = 0
 
     def find_empty(self):
         for row in range(len(self.board)):
