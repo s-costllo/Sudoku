@@ -378,7 +378,10 @@ class Board:
         return coor
 
     def clear(self):
-        pass
+        if self.board[row][col] != 0 and isinstance(self.board[row][col], int):
+	    self.board[row][col] = 0
+            print(f"Cell at ({row}, {col}) cleared.")
+	### need to do elif for sketching too once that is coded
 
     def sketch(self, value):
         pass
