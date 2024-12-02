@@ -269,13 +269,47 @@ class Cell:
     def set_cell_value(self, value):
         self.value = value
 
-    def set_sketched_value(self, value):
-        self.sketched_value = value
-
     def draw(self):
         number_font = pygame.font.Font("LEMONMILK-Light.otf", 50)
 
         number_surface = number_font.render(self.value, 1, "black")
+        number_rectangle = number_surface.get_rect(
+            center=(431 + self.col*67, 33 + self.row*67))
+        self.screen.blit(number_surface, number_rectangle)
+
+class SketchCell:
+    def __init__(self, value, row, col, screen):
+        self.value = str(value)
+        self.row = row
+        self.col = col
+        self.screen = screen
+
+    def set_cell_value(self, value):
+        self.value = value
+
+    def draw(self):
+
+        number_sketch_font = pygame.font.Font("LEMONMILK-Light.otf", 25)
+
+        number_sketch_surface = number_sketch_font.render(self.value, 1, (99, 101, 105))
+        number_sketch_rectangle = number_sketch_surface.get_rect(
+            center=(415 + self.col * 67, 16 + self.row * 67))
+        self.screen.blit(number_sketch_surface, number_sketch_rectangle)
+
+class FilledCell:
+    def __init__(self, value, row, col, screen):
+        self.value = str(value)
+        self.row = row
+        self.col = col
+        self.screen = screen
+
+    def set_cell_value(self, value):
+        self.value = value
+
+    def draw(self):
+        number_font = pygame.font.Font("LEMONMILK-Light.otf", 50)
+
+        number_surface = number_font.render(self.value, 1, (30,46,87))
         number_rectangle = number_surface.get_rect(
             center=(431 + self.col*67, 33 + self.row*67))
         self.screen.blit(number_surface, number_rectangle)
@@ -287,7 +321,7 @@ class Board:
         self.screen = screen
         self.difficulty = difficulty
 
-    def draw(self,sudoku):
+    def draw(self, sudoku, sketch, filled_cell):
         #self.screen.blit(bg, (0, 0))
         #self.screen.fill("black")
         board = pygame.Surface((603, 603))
@@ -309,6 +343,21 @@ class Board:
                 else:
                     board = Cell(sudoku[x][y],x,y,self.screen)
                     board.draw()
+        for y in range(9):
+            for x in range(9):
+                if sketch[x][y] == 0:
+                    continue
+                else:
+                    board = SketchCell(sketch[x][y],x,y,self.screen)
+                    board.draw()
+        for y in range(9):
+            for x in range(9):
+                if filled_cell[x][y] == 0:
+                    continue
+                else:
+                    board = FilledCell(filled_cell[x][y],x,y,self.screen)
+                    board.draw()
+
 
     def select(self, row, col):
         #top
@@ -338,8 +387,12 @@ class Board:
     def reset_to_original(self):
         pass
 
-    def is_full(self):
-        pass
+    def is_full(self, sudoku):
+        for y in range(9):
+            for x in range(9):
+                if sudoku[x][y] == 0:
+                    return False
+        return True
 
     def update_board(self):
         pass
@@ -347,5 +400,9 @@ class Board:
     def find_empty(self):
         pass
 
-    def check_board(self):
-        pass
+    def check_board(self, sudoku, sodokuSol):
+        for y in range(9):
+            for x in range(9):
+                if sudoku[x][y] != sodokuSol[x][y]:
+                    return False
+        return True
