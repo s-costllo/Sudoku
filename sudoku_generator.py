@@ -398,7 +398,11 @@ class Board:
         pass
 
     def find_empty(self):
-        pass
+        for row in range(len(self.board)):
+            for col in range(len(self.board[row])):
+                if self.board[row][col] == 0:
+		     return (row, col)
+	return None 
 
     def check_board(self, sudoku, sodokuSol):
         for y in range(9):
