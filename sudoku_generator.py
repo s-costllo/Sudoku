@@ -320,6 +320,8 @@ class Board:
         self.height = height
         self.screen = screen
         self.difficulty = difficulty
+	self.board = None
+	self.original_board = None
 
     def draw(self, sudoku, sketch, filled_cell):
         #self.screen.blit(bg, (0, 0))
@@ -384,8 +386,16 @@ class Board:
     def place_number(self, value):
         pass
 
+    def set_board(self, board):
+	self.board = board
+        self.original_board = [row[:] for row in board]
+
     def reset_to_original(self):
-        pass
+        if self.original_board is None:
+            raise ValueError("Original board is not defined. Please set the board first.")
+        for row in range(len(self.board)):
+            for col in range(len(self.board[row])):
+                self.board[row][col] = self.original_board[row][col]
 
     def is_full(self, sudoku):
         for y in range(9):
