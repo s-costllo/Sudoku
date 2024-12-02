@@ -89,13 +89,16 @@ def game(screen):
         center=(397 // 2, 603 // 2 + 175))
     screen.blit(exit_surface, exit_rectangle)
 
-    board.draw(sudoku)
+    board.draw(sudoku,sketch,filled_cell)
 
     #running
+    x = -1
+    y = -1
+    t = False
     while True:
-        x = -1
-        y = -1
         for event in pygame.event.get():
+            if board.is_full(sudoku):
+                return 4
             if event.type == pygame.QUIT:
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
@@ -110,34 +113,92 @@ def game(screen):
                     y = event.pos[1]
                     #print(x,y)
                     coor = board.click(x, y)
-                    print(coor)
                     if coor[0] >= 0:
-                        board.draw(sudoku)
+                        board.draw(sudoku,sketch,filled_cell)
                         board.select(coor[0],coor[1])
             if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_UP:
-                    if coor[0]>=0 and coor[1]>0:
-                        board.draw(sudoku)
-                        coor = (coor[0], coor[1]-1)
-                        board.select(coor[0], coor[1])
-                if event.key == pygame.K_DOWN:
-                    if coor[0] >= 0 and coor[1] < 8:
-                        board.draw(sudoku)
-                        coor = (coor[0], coor[1] + 1)
-                        board.select(coor[0], coor[1])
-                if event.key == pygame.K_LEFT:
-                    if coor[0] >= 1:
-                        board.draw(sudoku)
-                        coor = (coor[0] - 1, coor[1])
-                        board.select(coor[0], coor[1])
-                if event.key == pygame.K_RIGHT:
-                    if coor[0] >= 0 and coor[1] <= 8:
-                        board.draw(sudoku)
-                        coor = (coor[0] + 1, coor[1])
-                        board.select(coor[0] , coor[1])
+                if x >= 0 and y >= 0:
+                    if event.key == pygame.K_UP:
+                        if coor[0]>=0 and coor[1]>0:
+                            board.draw(sudoku,sketch,filled_cell)
+                            coor = (coor[0], coor[1]-1)
+                            board.select(coor[0], coor[1])
+                    if event.key == pygame.K_DOWN:
+                        if coor[0] >= 0 and coor[1] < 8:
+                            board.draw(sudoku,sketch,filled_cell)
+                            coor = (coor[0], coor[1] + 1)
+                            board.select(coor[0], coor[1])
+                    if event.key == pygame.K_LEFT:
+                        if coor[0] >= 1:
+                            board.draw(sudoku,sketch,filled_cell)
+                            coor = (coor[0] - 1, coor[1])
+                            board.select(coor[0], coor[1])
+                    if event.key == pygame.K_RIGHT:
+                        if coor[0] >= 0 and coor[1] <= 8:
+                            board.draw(sudoku,sketch,filled_cell)
+                            coor = (coor[0] + 1, coor[1])
+                            board.select(coor[0] , coor[1])
+                    if event.key == pygame.K_1:
+                        if sudoku[coor[1]][coor[0]] == 0 and filled_cell[coor[1]][coor[0]] == 0:
+                            sketch[coor[1]][coor[0]] = 1
+                            board.draw(sudoku, sketch, filled_cell)
+                            board.select(coor[0], coor[1])
+                    if event.key == pygame.K_2:
+                        if sudoku[coor[1]][coor[0]] == 0 and filled_cell[coor[1]][coor[0]] == 0:
+                            sketch[coor[1]][coor[0]] = 2
+                            board.draw(sudoku, sketch, filled_cell)
+                            board.select(coor[0], coor[1])
+                    if event.key == pygame.K_3:
+                        if sudoku[coor[1]][coor[0]] == 0 and filled_cell[coor[1]][coor[0]] == 0:
+                            sketch[coor[1]][coor[0]] = 3
+                            board.draw(sudoku, sketch, filled_cell)
+                            board.select(coor[0], coor[1])
+                    if event.key == pygame.K_4:
+                        if sudoku[coor[1]][coor[0]] == 0 and filled_cell[coor[1]][coor[0]] == 0:
+                            sketch[coor[1]][coor[0]] = 4
+                            board.draw(sudoku, sketch, filled_cell)
+                            board.select(coor[0], coor[1])
+                    if event.key == pygame.K_5:
+                        if sudoku[coor[1]][coor[0]] == 0 and filled_cell[coor[1]][coor[0]] == 0:
+                            sketch[coor[1]][coor[0]] = 5
+                            board.draw(sudoku, sketch, filled_cell)
+                            board.select(coor[0], coor[1])
+                    if event.key == pygame.K_6:
+                        if sudoku[coor[1]][coor[0]] == 0 and filled_cell[coor[1]][coor[0]] == 0:
+                            sketch[coor[1]][coor[0]] = 6
+                            board.draw(sudoku, sketch, filled_cell)
+                            board.select(coor[0], coor[1])
+                    if event.key == pygame.K_7:
+                        if sudoku[coor[1]][coor[0]] == 0 and filled_cell[coor[1]][coor[0]] == 0:
+                            sketch[coor[1]][coor[0]] = 7
+                            board.draw(sudoku, sketch, filled_cell)
+                            board.select(coor[0], coor[1])
+                    if event.key == pygame.K_8:
+                        if sudoku[coor[1]][coor[0]] == 0 and filled_cell[coor[1]][coor[0]] == 0:
+                            sketch[coor[1]][coor[0]] = 8
+                            board.draw(sudoku, sketch, filled_cell)
+                            board.select(coor[0], coor[1])
+                    if event.key == pygame.K_9:
+                        if sudoku[coor[1]][coor[0]] == 0 and filled_cell[coor[1]][coor[0]] == 0:
+                            sketch[coor[1]][coor[0]] = 9
+                            board.draw(sudoku, sketch, filled_cell)
+                            board.select(coor[0], coor[1])
+                    if event.key == pygame.K_RETURN:
+                        if sketch[coor[1]][coor[0]] != 0:
+                            filled_cell[coor[1]][coor[0]] = sketch[coor[1]][coor[0]]
+                            sketch[coor[1]][coor[0]] = 0
+                            sudoku[coor[1]][coor[0]] = filled_cell[coor[1]][coor[0]]
+                            board.draw(sudoku, sketch, filled_cell)
+                            board.select(coor[0], coor[1])
+                    if event.key == pygame.K_BACKSPACE:
+                        if sudokuO[coor[1]][coor[0]] == 0 and (filled_cell[coor[1]][coor[0]] != 0 or sketch[coor[1]][coor[0]] != 0):
+                            filled_cell[coor[1]][coor[0]] = 0
+                            sketch[coor[1]][coor[0]] = 0
+                            sudoku[coor[1]][coor[0]] = 0
+                            board.draw(sudoku, sketch, filled_cell)
+                            board.select(coor[0], coor[1])
 
         pygame.display.update()
-
 
 def draw_game_over(screen):
     #screen.fill("black")
@@ -194,7 +255,7 @@ def draw_game_won(screen):
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if restart_rectangle.collidepoint(event.pos):
-                    return 2
+                    return True
         pygame.display.update()
 
 if __name__ == '__main__':
@@ -212,60 +273,42 @@ if __name__ == '__main__':
         sudoku = SudokuGenerator(9, diff)
         sudoku.fill_values()
         sudokuR = copy.deepcopy(sudoku)
+        #board solved
         sudokuSol = sudoku.get_board()
         sudokuR.remove_cells()
+        #board to edit
         sudoku = sudokuR.get_board()
+        #original board
         sudokuO = copy.deepcopy(sudoku)
-
-        '''
-        for x in range(9):
-            for y in range(9):
-                print(sudokuSol[x][y], end=" ")
-            print("")
-        print("")
-        '''
+        sketch = [[0]*9 for i in range(9)]
+        filled_cell = [[0]*9 for i in range(9)]
 
         for x in range(9):
             for y in range(9):
                 print(sudoku[x][y], end=" ")
             print("")
         print("")
-
-        boardOption = game(screen)
-
-        if boardOption == 1:
-            #just testing game won and game lost screens
-            draw_game_won(screen)
-        elif boardOption == 2:
-            draw_game_over(screen)
-        elif boardOption == 3:
-            sys.exit()
-
-        '''
+        for x in range(9):
+            for y in range(9):
+                print(sudokuSol[x][y], end=" ")
+            print("")
+        print("")
         while True:
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    sys.exit()
-                if event.type == pygame.MOUSEBUTTONDOWN:
-                    if reset_rectangle.collidepoint(event.pos):
-                        x = 1
-                    elif restart_rectangle.collidepoint(event.pos):
-                        x = 2
-                    elif exit_rectangle.collidepoint(event.pos):
-                        sys.exit()
-            pygame.display.update()
-        '''
-        '''
-        diff = draw_game_start(screen)
-        if diff == 1:
-            boardOption = draw_game(screen)
-        if diff == 2:
-            boardOption = draw_game(screen)
-        if diff == 3:
-            boardOption = draw_game(screen)
-        '''
-    
 
+            boardOption = game(screen)
 
-
+            if boardOption == 1:
+                sudoku = copy.deepcopy(sudokuO)
+                sketch = [[0] * 9 for i in range(9)]
+                filled_cell = [[0] * 9 for i in range(9)]
+            elif boardOption == 2:
+                break
+            elif boardOption == 3:
+                sys.exit()
+            elif boardOption == 4:
+                if board.check_board(sudoku, sudokuSol):
+                    if draw_game_won(screen):
+                        break
+                else:
+                    draw_game_over(screen)
 
