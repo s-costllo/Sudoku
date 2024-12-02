@@ -283,6 +283,7 @@ if __name__ == '__main__':
         sketch = [[0]*9 for i in range(9)]
         filled_cell = [[0]*9 for i in range(9)]
 
+        '''
         for x in range(9):
             for y in range(9):
                 print(sudoku[x][y], end=" ")
@@ -293,8 +294,8 @@ if __name__ == '__main__':
                 print(sudokuSol[x][y], end=" ")
             print("")
         print("")
+        '''
         while True:
-
             boardOption = game(screen)
 
             if boardOption == 1:
