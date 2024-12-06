@@ -252,13 +252,13 @@ Return: list[list] (a 2D Python list to represent the board)
 '''
 def generate_sudoku(size, removed):
     sudoku = SudokuGenerator(size, removed)
-    sudoku.fill_values()
+    sudoku.fill_values() 
     board = sudoku.get_board()
-    sudoku.remove_cells()
-    board = sudoku.get_board()
-    return board
+    sudoku.remove_cells() #clears some cells to create the puzzle
+    board = sudoku.get_board() #gets updated board
+    return board #returns the updated puzzle board
 
-
+#class that represents each cell in Sudoku grid
 class Cell:
     def __init__(self, value, row, col, screen):
         self.value = str(value)
@@ -273,7 +273,8 @@ class Cell:
         number_font = pygame.font.Font("LEMONMILK-Light.otf", 50)
 
         number_surface = number_font.render(self.value, 1, "black")
-        number_rectangle = number_surface.get_rect(
+        #gets rectangle the number will be placed
+	number_rectangle = number_surface.get_rect(
             center=(431 + self.col*67, 33 + self.row*67))
         self.screen.blit(number_surface, number_rectangle)
 
@@ -292,7 +293,8 @@ class SketchCell:
         number_sketch_font = pygame.font.Font("LEMONMILK-Light.otf", 25)
 
         number_sketch_surface = number_sketch_font.render(self.value, 1, (99, 101, 105))
-        number_sketch_rectangle = number_sketch_surface.get_rect(
+        #gets rectangle where sketched number will be placed
+	number_sketch_rectangle = number_sketch_surface.get_rect(
             center=(415 + self.col * 67, 16 + self.row * 67))
         self.screen.blit(number_sketch_surface, number_sketch_rectangle)
 
@@ -310,6 +312,7 @@ class FilledCell:
         number_font = pygame.font.Font("LEMONMILK-Light.otf", 50)
 
         number_surface = number_font.render(self.value, 1, (30,46,87))
+	#gets rectangle where number will be placed
         number_rectangle = number_surface.get_rect(
             center=(431 + self.col*67, 33 + self.row*67))
         self.screen.blit(number_surface, number_rectangle)
@@ -338,24 +341,27 @@ class Board:
         for col in range(3, 7, 3):
             pygame.draw.line(self.screen, (99, 101, 105), (col * 67 + 397, 0), (col * 67 + 397, 603), 4)
 
+	#draws numbers in each cell 
         for y in range(9):
             for x in range(9):
                 if sudoku[x][y] == 0:
-                    continue
+                    continue #skips empty cells
                 else:
                     board = Cell(sudoku[x][y],x,y,self.screen)
                     board.draw()
+	#draws sketch numbers
         for y in range(9):
             for x in range(9):
                 if sketch[x][y] == 0:
-                    continue
+                    continue #skips empty cells
                 else:
                     board = SketchCell(sketch[x][y],x,y,self.screen)
                     board.draw()
+	#draws filled cells
         for y in range(9):
             for x in range(9):
                 if filled_cell[x][y] == 0:
-                    continue
+                    continue #skips empty cells
                 else:
                     board = FilledCell(filled_cell[x][y],x,y,self.screen)
                     board.draw()
@@ -372,14 +378,17 @@ class Board:
         pygame.draw.line(self.screen, (30,46,87), (397 + row * 67+67,  col * 67), (397 + row * 67+67, col * 67+67), 4)
 
     def click(self, row, col):
-        row = (row - 397)//67
-        col = col//67
-        coor = (row, col)
+	#pixel coordinates to grid coordinates 
+        row = (row - 397)//67 #calculates row number
+        col = col//67 #calculates column number
+        coor = (row, col) #returns selected cell as (row, col)
         return coor
 
     def clear(self):
+	#clears value of selected cell if there
         if self.value is not None:
 	    self.value = None
+	#clears sketch value if there
 	if hasattr(self, "sketch_value") and self.sketch_value is not None:
 	    self.sketch_value = None
 
