@@ -394,12 +394,13 @@ class Board:
 
     def sketch(self, value):
         if not hasattr(self, "sketch_grid"):
-	    self.sketch_grid = {}
+	    self.sketch_grid = {} #initializes sketch grid if it doesn't exist yet
 	if hasattr(self, "selected_cell") and self.selected_cell is not None:
 	    row, col = self.selected_cell
-	    self.sketch_grid[(row, col)] = value
+	    self.sketch_grid[(row, col)] = value #sets sketch value for selected cell
 
     def place_number(self, value):
+	#sets value of current selected cell equal to the user entered value 
         row, col = self.selected_cell
 	if 0 <= row < len(self.board) and 0 <= col < len(self.board[row]):
 	    self.board[row][col] = value
@@ -407,17 +408,25 @@ class Board:
             raise IndexError("Selected cell is out of bounds.")
 
     def set_board(self, board):
+	#sets current board state
 	self.board = board
-        self.original_board = [row[:] for row in board]
-
+	#stores copy of original board to reset later
+	self.original_board = []  #initialize an empty list to store  copy of the board
+            for row in board:  
+            	new_row = row[:]  
+            	self.original_board.append(new_row)
+		    
     def reset_to_original(self):
+	#checks to prevent resetting the board
         if self.original_board is None:
             raise ValueError("Original board is not defined. Please set the board first.")
+	#resets board to original state
         for row in range(len(self.board)):
             for col in range(len(self.board[row])):
                 self.board[row][col] = self.original_board[row][col]
 
     def is_full(self, sudoku):
+	#checks if board is full 
         for y in range(9):
             for x in range(9):
                 if sudoku[x][y] == 0:
@@ -425,12 +434,14 @@ class Board:
         return True
 
     def update_board(self):
+	#updates underlying 2D board with values in all cells 
         for row in range(len(self.board)):
             for col in range(len(self.board[row])):
 		if self.board[row][col] is None:
                 self.board[row][col] = 0
 
     def find_empty(self):
+	#finds empty cell and returns row and col as tuple(x,y)
         for row in range(len(self.board)):
             for col in range(len(self.board[row])):
                 if self.board[row][col] == 0:
@@ -438,6 +449,7 @@ class Board:
 	return None 
 
     def check_board(self, sudoku, sodokuSol):
+	#checks if board is solved correctly
         for y in range(9):
             for x in range(9):
                 if sudoku[x][y] != sodokuSol[x][y]:
