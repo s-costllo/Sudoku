@@ -329,7 +329,7 @@ class FilledCell:
     def draw(self):
         number_font = pygame.font.Font("LEMONMILK-Light.otf", 50)
 
-        number_surface = number_font.render(self.value, 1, (30, 46, 87))
+        number_surface = number_font.render(self.value, 1, (51, 77, 143))
         # gets rectangle where number will be placed
         number_rectangle = number_surface.get_rect(
             center=(431 + self.col * 67, 33 + self.row * 67))
