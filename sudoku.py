@@ -211,36 +211,6 @@ def draw_game_over(screen):
         center=(1000 // 2, 603 // 2 - 150))
     screen.blit(title_surface, title_rectangle)
 
-    exit_text = button_font.render("exit", 1, (255, 255, 255))
-    exit_surface = pygame.Surface((exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20))
-    exit_surface.fill((30, 46, 87))
-    exit_surface.blit(exit_text, (10, 10))
-    exit_rectangle = exit_surface.get_rect(
-        center=(1000 // 2, 603 // 2 + 175))
-    screen.blit(exit_surface, exit_rectangle)
-
-
-    while True:
-        for event in pygame.event.get():
-            if event.type == pygame.QUIT:
-                sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
-                if exit_rectangle.collidepoint(event.pos):
-                    sys.exit()
-        pygame.display.update()
-
-
-def draw_game_won(screen):
-    #screen.fill("black")
-    screen.blit(bg, (0, 0))
-    start_title_font = pygame.font.Font("LEMONMILK-Medium.otf", 70)
-    button_font = pygame.font.Font("LEMONMILK-Medium.otf", 50)
-
-    title_surface = start_title_font.render("Game Won!!!", 1, "white")
-    title_rectangle = title_surface.get_rect(
-        center=(1000 // 2, 603 // 2 - 150))
-    screen.blit(title_surface, title_rectangle)
-
     restart_text = button_font.render("restart", 1, (255, 255, 255))
     restart_surface = pygame.Surface((restart_text.get_size()[0] + 20, restart_text.get_size()[1] + 20))
     restart_surface.fill((30, 46, 87))
@@ -256,6 +226,35 @@ def draw_game_won(screen):
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if restart_rectangle.collidepoint(event.pos):
                     return True
+        pygame.display.update()
+
+
+def draw_game_won(screen):
+    #screen.fill("black")
+    screen.blit(bg, (0, 0))
+    start_title_font = pygame.font.Font("LEMONMILK-Medium.otf", 70)
+    button_font = pygame.font.Font("LEMONMILK-Medium.otf", 50)
+
+    title_surface = start_title_font.render("Game Won!!!", 1, "white")
+    title_rectangle = title_surface.get_rect(
+        center=(1000 // 2, 603 // 2 - 150))
+    screen.blit(title_surface, title_rectangle)
+
+    exit_text = button_font.render("exit", 1, (255, 255, 255))
+    exit_surface = pygame.Surface((exit_text.get_size()[0] + 20, exit_text.get_size()[1] + 20))
+    exit_surface.fill((30, 46, 87))
+    exit_surface.blit(exit_text, (10, 10))
+    exit_rectangle = exit_surface.get_rect(
+        center=(1000 // 2, 603 // 2 + 175))
+    screen.blit(exit_surface, exit_rectangle)
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                sys.exit()
+            if event.type == pygame.MOUSEBUTTONDOWN:
+                if exit_rectangle.collidepoint(event.pos):
+                    sys.exit()
         pygame.display.update()
 
 if __name__ == '__main__':
@@ -283,7 +282,7 @@ if __name__ == '__main__':
         sketch = [[0]*9 for i in range(9)]
         filled_cell = [[0]*9 for i in range(9)]
 
-        '''
+
         for x in range(9):
             for y in range(9):
                 print(sudoku[x][y], end=" ")
@@ -294,7 +293,7 @@ if __name__ == '__main__':
                 print(sudokuSol[x][y], end=" ")
             print("")
         print("")
-        '''
+
         while True:
             boardOption = game(screen)
 
@@ -311,5 +310,7 @@ if __name__ == '__main__':
                     if draw_game_won(screen):
                         break
                 else:
-                    draw_game_over(screen)
+                    x = draw_game_over(screen)
+                    if x:
+                        break
 
