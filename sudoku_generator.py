@@ -378,13 +378,17 @@ class Board:
         return coor
 
     def clear(self):
-        if self.board[row][col] != 0 and isinstance(self.board[row][col], int):
-	    self.board[row][col] = 0
-            print(f"Cell at ({row}, {col}) cleared.")
-	### need to do elif for sketching too once that is coded
+        if self.value is not None:
+	    self.value = None
+	if hasattr(self, "sketch_value") and self.sketch_value is not None:
+	    self.sketch_value = None
 
     def sketch(self, value):
-        pass
+        if not hasattr(self, "sketch_grid"):
+	    self.sketch_grid = {}
+	if hasattr(self, "selected_cell") and self.selected_cell is not None:
+	    row, col = self.selected_cell
+	    self.sketch_grid[(row, col)] = value
 
     def place_number(self, value):
         row, col = self.selected_cell
