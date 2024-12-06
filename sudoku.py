@@ -134,7 +134,7 @@ def game(screen):
                             coor = (coor[0] - 1, coor[1])
                             board.select(coor[0], coor[1])
                     if event.key == pygame.K_RIGHT:
-                        if coor[0] >= 0 and coor[1] <= 8:
+                        if coor[0] < 8:
                             board.draw(sudoku,sketch,filled_cell)
                             coor = (coor[0] + 1, coor[1])
                             board.select(coor[0] , coor[1])
