@@ -3,17 +3,20 @@ from sudoku_generator import *
 import copy
 
 def draw_game_start(screen):
+    #loads fonts for the title and button text
     start_title_font = pygame.font.Font("LEMONMILK-Medium.otf", 70)
     button_font = pygame.font.Font("LEMONMILK-Medium.otf", 50)
 
     screen.blit(bg, (0, 0))
     #screen.fill("black")
 
+    #title text setup
     title_surface = start_title_font.render("Sudoku", 1, "white")
     title_rectangle = title_surface.get_rect(
         center =(1000//2, 603//2 - 150))
     screen.blit(title_surface, title_rectangle)
 
+    #text setup
     diff_surface = button_font.render("Select difficulty:", 1, "white")
     diff_rectangle = diff_surface.get_rect(
         center=(1000 // 2, 603 // 2+30 ))
@@ -23,6 +26,7 @@ def draw_game_start(screen):
     medium_text = button_font.render("Medium", 1, (255,255,255))
     hard_text = button_font.render("Hard", 1, (255, 255, 255))
 
+    #button colors for different difficulty options
     easy_surface = pygame.Surface((easy_text.get_size()[0] + 20, easy_text.get_size()[1] + 20))
     easy_surface.fill((30,46,87))
     easy_surface.blit(easy_text, (10,10))
@@ -33,6 +37,7 @@ def draw_game_start(screen):
     hard_surface.fill((30, 46, 87))
     hard_surface.blit(hard_text, (10, 10))
 
+    #defines and positions buttons on screen
     easy_rectangle = easy_surface.get_rect(
         center=(1000//2-250, 603//2+150))
     medium_rectangle = medium_surface.get_rect(
@@ -44,6 +49,7 @@ def draw_game_start(screen):
     screen.blit(medium_surface, medium_rectangle)
     screen.blit(hard_surface, hard_rectangle)
 
+    #user interaction to select difficulty or quit
     while True:
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
@@ -98,16 +104,16 @@ def game(screen):
     while True:
         for event in pygame.event.get():
             if board.is_full(sudoku):
-                return 4
+                return 4 #game over condition
             if event.type == pygame.QUIT:
                 sys.exit()
             if event.type == pygame.MOUSEBUTTONDOWN:
                 if reset_rectangle.collidepoint(event.pos):
-                    return 1
+                    return 1 #reset button condition
                 elif restart_rectangle.collidepoint(event.pos):
-                    return 2
+                    return 2 #restart button condition
                 elif exit_rectangle.collidepoint(event.pos):
-                    return 3
+                    return 3 #exit button condition
                 else:
                     x = event.pos[0]
                     y = event.pos[1]
@@ -116,7 +122,7 @@ def game(screen):
                     if coor[0] >= 0:
                         board.draw(sudoku,sketch,filled_cell)
                         board.select(coor[0],coor[1])
-            if event.type == pygame.KEYDOWN:
+            if event.type == pygame.KEYDOWN: #handles keyboard input
                 if x >= 0 and y >= 0:
                     if event.key == pygame.K_UP:
                         if coor[0]>=0 and coor[1]>0:
@@ -198,14 +204,15 @@ def game(screen):
                             board.draw(sudoku, sketch, filled_cell)
                             board.select(coor[0], coor[1])
 
-        pygame.display.update()
+        pygame.display.update() #refreshes display
 
 def draw_game_over(screen):
     #screen.fill("black")
-    screen.blit(bg, (0, 0))
+    screen.blit(bg, (0, 0)) #draws background
     start_title_font = pygame.font.Font("LEMONMILK-Medium.otf", 70)
     button_font = pygame.font.Font("LEMONMILK-Medium.otf", 50)
 
+    #renders and positions game end title
     title_surface = start_title_font.render("Game Lost :((((", 1, "white")
     title_rectangle = title_surface.get_rect(
         center=(1000 // 2, 603 // 2 - 150))
@@ -222,9 +229,9 @@ def draw_game_over(screen):
 
     while True:
         for event in pygame.event.get():
-            if event.type == pygame.QUIT:
+            if event.type == pygame.QUIT: #handles quitting
                 sys.exit()
-            if event.type == pygame.MOUSEBUTTONDOWN:
+            if event.type == pygame.MOUSEBUTTONDOWN: 
                 if exit_rectangle.collidepoint(event.pos):
                     sys.exit()
         pygame.display.update()
@@ -260,15 +267,15 @@ def draw_game_won(screen):
 
 if __name__ == '__main__':
 
-    pygame.init()
+    pygame.init() #initializes pygame
     screen = pygame.display.set_mode((1000,603))
     bg = pygame.image.load("TL.png")
     # bg and dimensions subject to change, just using it for reference right now
 
     while True:
-
-        diff = draw_game_start(screen)
-        board = Board(9, 9, screen, diff)
+        # main game loop
+        diff = draw_game_start(screen) #displays start screen and gets difficulty
+        board = Board(9, 9, screen, diff) 
         #sudoku = generate_sudoku(9, diff)
         sudoku = SudokuGenerator(9, diff)
         sudoku.fill_values()
